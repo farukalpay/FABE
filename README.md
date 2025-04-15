@@ -28,6 +28,11 @@ FABE13 also includes a **complete trigonometric API**, including `sinc`, `tan`, 
 ## 📂 Project Structure
 
 ```
+git clone https://github.com/farukalpay/FABE.git
+cd FABE/fabe13
+```
+
+```
 fabe13/                 # Core SIMD + scalar implementation
 ├── fabe13.c
 ├── fabe13.h
@@ -61,11 +66,13 @@ make
 
 ---
 
-## 📊 Performance & Accuracy
+## 📈 Performance & Accuracy
 
 FABE13 excels at **large-scale SIMD throughput** while maintaining floating-point correctness.
 
-### 📈 Benchmark Comparison
+![FABE13 Benchmark Chart](https://github.com/farukalpay/FABE/blob/main/img/FABE13%20vs%20libm%20Benchmark%20Performance.png)
+
+### 📊 Benchmark Comparison
 
 | Input Size | FABE13 Time | libm Time | FABE13 vs libm |
 |------------|-------------|-----------|----------------|
@@ -111,12 +118,12 @@ void fabe13_sincos(const double* in, double* sin_out, double* cos_out, int n);
 
 ---
 
-## 🔎 Internals
+## 🔍 Internals
 
 - 📊 **Payne–Hanek**: Double-double modular reduction of large inputs
 - 🌌 **Estrin Evaluation**: Fast polynomial evaluation with reduced dependencies
 - ⚖️ **Vector Quadrant Correction**: Branchless SIMD quadrant logic
-- 📊 **Dispatch**: AVX512/AVX2/NEON/Scalar selected at runtime
+- 📈 **Dispatch**: AVX512/AVX2/NEON/Scalar selected at runtime
 
 ---
 
@@ -139,7 +146,7 @@ Planned features:
 
 ---
 
-## 📖 License
+## 📜 License
 
 **MIT License © 2025 Faruk Alpay**  
 See [LICENSE](LICENSE)
@@ -152,3 +159,4 @@ See [LICENSE](LICENSE)
 [https://Frontier2075.com](https://Frontier2075.com)
 
 > FABE13 is part of an ongoing initiative to build precise, portable, and high-throughput numerical libraries for the future of scientific computing.
+
