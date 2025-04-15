@@ -189,3 +189,9 @@ FABE13 is still in **early beta**, and while its architecture is solid and scala
 The long-term goal?  
 To make FABE13 the **most trusted** SIMD-first trig core in open source — both for researchers and for production systems that demand real accuracy, real speed, and zero magic.
 
+---
+
+📣 Want to contribute, benchmark, or integrate FABE13?
+Start here → https://github.com/farukalpay/FABE
+
+🔬 Built under the Lightcap initiative: https://lightcap.ai
