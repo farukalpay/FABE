@@ -89,6 +89,16 @@ FABE13 excels at **large-scale SIMD throughput** while maintaining floating-poin
 
 ### 🌟 Accuracy Profile
 
+- Uses **Payne–Hanek** reduction for full-domain correctness  
+- **Estrin's scheme** for stable SIMD polynomial evaluation  
+- Handles all IEEE-754 edge cases  
+- **0 ULP** matches for many standard inputs  
+- ⚠️ Slight numerical drift observed in extreme `|x| > 1e18` due to floating-point resolution limits — within acceptable bounds for scientific use  
+
+![FABE13 Accuracy vs libm](https://github.com/farukalpay/FABE/blob/main/img/8F798A77-E21C-4F05-A813-2A4DC974A3D2.png)
+
+### 🌟 Accuracy Profile
+
 - Uses **Payne–Hanek** reduction for full-domain correctness
 - **Estrin's scheme** for stable SIMD polynomial evaluation
 - Handles all IEEE-754 edge cases
