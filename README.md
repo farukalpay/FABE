@@ -101,13 +101,6 @@ This chart shows how FABE13 saturates SIMD execution as workloads scale — whil
 
 ![FABE13 Accuracy vs libm](https://github.com/farukalpay/FABE/blob/main/img/8F798A77-E21C-4F05-A813-2A4DC974A3D2.png?raw=true)
 
-### 🌟 Accuracy Profile
-
-- Uses **Payne–Hanek** reduction for full-domain correctness
-- **Estrin's scheme** for stable SIMD polynomial evaluation
-- Handles all IEEE-754 edge cases
-- **0 ULP** matches for many standard inputs
-
 #### Max observed deviation:
 ```
 sin: 9.9196e+61
