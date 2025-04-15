@@ -1,0 +1,75 @@
+# === Compiler & Flags ===
+CC = gcc
+CFLAGS = -O3 -ffast-math -march=native
+
+# Detect platform (for removing -lrt on macOS)
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S), Darwin)
+    LRT_FLAG =
+else
+    LRT_FLAG = -lrt
+endif
+
+LDLIBS = -lm $(LRT_FLAG)
+
+# Add include path so #include "fabe13/fabe13.h" is found
+CFLAGS += -I.  # or: CFLAGS += -I fabe13
+
+# === Directories ===
+SRC_DIR       = fabe13
+TEST_DIR      = tests
+BUILD_DIR     = build
+
+# === Sources ===
+LIB_SRC       = $(SRC_DIR)/fabe13.c
+BENCHMARK_SRC = $(SRC_DIR)/benchmark_fabe13.c
+TEST_SRC      = $(TEST_DIR)/test_fabe13.c
+
+# === Outputs ===
+LIB_OBJ       = $(BUILD_DIR)/fabe13.o
+BENCHMARK_BIN = $(BUILD_DIR)/fabe13_benchmark
+TEST_BIN      = $(BUILD_DIR)/fabe13_test
+
+# === SIMD Options (optional) ===
+ARCH ?= native
+ifeq ($(ARCH),avx2)
+    SIMD_FLAGS = -mavx2 -mfma
+else ifeq ($(ARCH),avx512)
+    SIMD_FLAGS = -mavx512f -mfma
+else ifeq ($(ARCH),neon)
+    SIMD_FLAGS =  # AArch64 typically defaults to NEON
+else
+    SIMD_FLAGS = -march=$(ARCH)
+endif
+
+# === Default Target ===
+all: $(BENCHMARK_BIN) $(TEST_BIN)
+
+# Create build directory if needed
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
+
+# 1) Build the library object
+$(LIB_OBJ): $(LIB_SRC) | $(BUILD_DIR)
+	$(CC) $(CFLAGS) $(SIMD_FLAGS) -c $< -o $@
+
+# 2) Build the benchmark
+$(BENCHMARK_BIN): $(LIB_OBJ) $(BENCHMARK_SRC) | $(BUILD_DIR)
+	# If code #ifdefs on ENABLE_FABE13_BENCHMARK, define it here:
+	$(CC) $(CFLAGS) $(SIMD_FLAGS) -DENABLE_FABE13_BENCHMARK=1 $^ -o $@ $(LDLIBS)
+
+# 3) Build the test
+$(TEST_BIN): $(LIB_OBJ) $(TEST_SRC) | $(BUILD_DIR)
+	$(CC) $(CFLAGS) $(SIMD_FLAGS) $^ -o $@ $(LDLIBS)
+
+# === Convenience Targets ===
+run-test: $(TEST_BIN)
+	./$(TEST_BIN)
+
+run-benchmark: $(BENCHMARK_BIN)
+	./$(BENCHMARK_BIN)
+
+clean:
+	rm -rf $(BUILD_DIR)
+
+.PHONY: all clean run-test run-benchmark
