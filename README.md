@@ -70,7 +70,7 @@ make
 
 FABE13 excels at **large-scale SIMD throughput** while maintaining floating-point correctness.
 
-![FABE13 Benchmark Chart](https://github.com/farukalpay/FABE/blob/main/img/FABE13%20vs%20libm%20Benchmark%20Performance.png)
+![FABE13 Benchmark Chart](https://github.com/farukalpay/FABE/blob/main/img/fabe13-vs-libm-performance.png?raw=true)
 
 ### 📊 Benchmark Comparison
 
