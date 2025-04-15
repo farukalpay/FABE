@@ -87,7 +87,7 @@ FABE13 excels at **large-scale SIMD throughput** while maintaining floating-poin
 
 This chart shows how FABE13 saturates SIMD execution as workloads scale — while libm remains underutilized.
 
-![CPU Usage vs Input Size: FABE13 vs libm](https://github.com/farukalpay/FABE/blob/main/img/CPU%20Usage%20vs%20Input%20Size%3A%20FABE13%20vs%20libm.png?raw=true)
+![CPU Usage vs Input Size: FABE13 vs libm](https://raw.githubusercontent.com/farukalpay/FABE/refs/heads/main/img/cpu-fabe13-vs-libm.png)
 
 > 🔍 FABE13 uses more CPU at small batch sizes — a known tradeoff for full precision — but **pays off massively at scale**.
 
