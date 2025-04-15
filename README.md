@@ -156,7 +156,7 @@ See [LICENSE](LICENSE)
 ## 👥 Author
 
 **Faruk Alpay**  
-[https://Frontier2075.com](https://Frontier2075.com)
+[https://lightcap.ai](https://lightcap.ai)
 
-> FABE13 is part of an ongoing initiative to build precise, portable, and high-throughput numerical libraries for the future of scientific computing.
+> FABE13 is developed under the Lightcap initiative — a parent brand dedicated to crafting precise, portable, and high-throughput tools for the future of science, computation, and creativity. From AI research to numerical libraries like FABE13, Lightcap unifies innovation across disciplines with minimalism, clarity, and performance at its core.
 
