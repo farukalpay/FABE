@@ -72,6 +72,10 @@ FABE13 excels at **large-scale SIMD throughput** while maintaining floating-poin
 
 ![FABE13 Benchmark Chart](https://github.com/farukalpay/FABE/blob/main/img/FABE13%20vs%20libm%20Benchmark%20Performance.png)
 
+![FABE13 vs libm Graph](https://github.com/farukalpay/FABE/blob/main/img/FABE13_vs_libm_Benchmark_Graph.png)
+
+![FABE13 CPU Usage Chart](https://github.com/farukalpay/FABE/blob/main/img/FABE13_vs_libm_CPU_Usage.png)
+
 ### 📊 Benchmark Comparison
 
 | Input Size | FABE13 Time | libm Time | FABE13 vs libm |
@@ -159,4 +163,22 @@ See [LICENSE](LICENSE)
 [https://lightcap.ai](https://lightcap.ai)
 
 > FABE13 is developed under the Lightcap initiative — a parent brand dedicated to crafting precise, portable, and high-throughput tools for the future of science, computation, and creativity. From AI research to numerical libraries like FABE13, Lightcap unifies innovation across disciplines with minimalism, clarity, and performance at its core.
+
+### ⚠️ Known Weaknesses (and Roadmap for Improvement)
+
+FABE13 is still in **early beta**, and while its architecture is solid and scalable, it currently shows some real-world tradeoffs:
+
+- ❌ **High CPU usage for small input batches** (1M–100M) due to always-on range reduction and SIMD overhead
+- ❌ **Lack of fast-path logic** for |x| < π/4 — where simple polynomial shortcuts would suffice
+- ❌ **No support yet for WASM SIMD, SVE, or RISC-V V**
+- ❌ **No header-only version or bindings for C++, Rust, or Python yet**
+
+> 💡 These are not only going to be fixed — they’re going to be **transformed into strengths**:
+> - Adaptive fast-path logic (skip PH reduction when safe)
+> - Loop unrolling & memory alignment improvements (especially NEON)
+> - Lower-degree poly options for embedded use
+> - Cross-language wrappers + header-only mode
+
+The long-term goal?  
+To make FABE13 the **most trusted** SIMD-first trig core in open source — both for researchers and for production systems that demand real accuracy, real speed, and zero magic.
 
