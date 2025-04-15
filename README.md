@@ -72,10 +72,6 @@ FABE13 excels at **large-scale SIMD throughput** while maintaining floating-poin
 
 ![FABE13 Benchmark Chart](https://github.com/farukalpay/FABE/blob/main/img/FABE13%20vs%20libm%20Benchmark%20Performance.png)
 
-![FABE13 vs libm Graph](https://github.com/farukalpay/FABE/blob/main/img/FABE13_vs_libm_Benchmark_Graph.png)
-
-![FABE13 CPU Usage Chart](https://github.com/farukalpay/FABE/blob/main/img/FABE13_vs_libm_CPU_Usage.png)
-
 ### 📊 Benchmark Comparison
 
 | Input Size | FABE13 Time | libm Time | FABE13 vs libm |
@@ -87,15 +83,23 @@ FABE13 excels at **large-scale SIMD throughput** while maintaining floating-poin
 
 > ⚠️ FABE13 is slower for small sizes due to full-precision range reduction, but **dramatically faster at scale**.
 
+#### 🔧 CPU Usage Comparison
+
+This chart shows how FABE13 saturates SIMD execution as workloads scale — while libm remains underutilized.
+
+![CPU Usage vs Input Size: FABE13 vs libm](https://github.com/farukalpay/FABE/blob/main/img/CPU%20Usage%20vs%20Input%20Size%3A%20FABE13%20vs%20libm.png?raw=true)
+
+> 🔍 FABE13 uses more CPU at small batch sizes — a known tradeoff for full precision — but **pays off massively at scale**.
+
 ### 🌟 Accuracy Profile
 
 - Uses **Payne–Hanek** reduction for full-domain correctness  
 - **Estrin's scheme** for stable SIMD polynomial evaluation  
 - Handles all IEEE-754 edge cases  
 - **0 ULP** matches for many standard inputs  
-- ⚠️ Slight numerical drift observed in extreme `|x| > 1e18` due to floating-point resolution limits — within acceptable bounds for scientific use  
+- Slight numerical drift observed in extreme `|x| > 1e18` due to floating-point resolution limits — within acceptable bounds for scientific use  
 
-![FABE13 Accuracy vs libm](https://github.com/farukalpay/FABE/blob/main/img/8F798A77-E21C-4F05-A813-2A4DC974A3D2.png)
+![FABE13 Accuracy vs libm](https://github.com/farukalpay/FABE/blob/main/img/8F798A77-E21C-4F05-A813-2A4DC974A3D2.png?raw=true)
 
 ### 🌟 Accuracy Profile
 
