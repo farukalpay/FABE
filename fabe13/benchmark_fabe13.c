@@ -85,7 +85,7 @@ int main(void) {
     printf("Selected Implementation: %s (SIMD Width: %d)\n\n", impl_name, simd_width);
 
     // Simple example: compare performance on a large array of angles
-    const int N = 10000000;  // 10 million
+    const int N = 1000000000;  // 1 billion
     double* angles     = (double*)aligned_malloc(N * sizeof(double), FABE13_ALIGNMENT);
     double* sin_fabe13 = (double*)aligned_malloc(N * sizeof(double), FABE13_ALIGNMENT);
     double* cos_fabe13 = (double*)aligned_malloc(N * sizeof(double), FABE13_ALIGNMENT);
