@@ -1,0 +1,144 @@
+# Build directories
+/build/
+/bin/
+/lib/
+/out/
+/cmake-build-*/
+/CMakeFiles/
+/install/
+
+# CMake generated files
+CMakeCache.txt
+CMakeUserPresets.json
+compile_commands.json
+CTestTestfile.cmake
+_deps/
+*.cmake
+!CMakeLists.txt
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+fabe13_test
+fabe13_benchmark
+
+# Generated files
+Testing/
+DartConfiguration.tcl
+
+# IDE files
+## Visual Studio
+.vs/
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.VC.db
+*.VC.opendb
+ipch/
+*.aps
+*.ncb
+*.opensdf
+*.sdf
+*.cachefile
+*.VC.db
+*.VC.VC.opendb
+
+## VSCode
+.vscode/
+*.code-workspace
+
+## CLion/JetBrains
+.idea/
+*.iml
+*.iws
+*.ipr
+.idea_modules/
+cmake-build-*/
+
+## XCode
+*.xcodeproj/
+*.xcworkspace/
+xcuserdata/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+
+# Doxygen output
+docs/html/
+docs/latex/
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Kernel Module Compile Results
+*.mod*
+*.cmd
+.tmp_versions/
+modules.order
+Module.symvers
+Mkfile.old
+dkms.conf
+
+# Profile output files
+callgrind.out.*
+perf.data
+perf.data.old
+gmon.out
+*.gcda
+*.gcno
+*.prof
+
+# Performance benchmarking results
+benchmark_results/
+*.csv
+*.log
+*.json
+!test_data/*.csv
+!test_data/*.json
+
+# Environment specific files
+.env
+.envrc
+
+# Package files
+*.tar.gz
+*.zip
+
+# Backup files
+*~
+*.bak
+*.swp
+*.swo
