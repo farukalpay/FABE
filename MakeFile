@@ -1,58 +1,57 @@
 # === Compiler & Flags ===
-CC       := gcc
-ARCH     ?= native         # override with ARCH=avx2 or ARCH=avx512
-SIMD_FLAGS := -march=$(ARCH)
-ifeq ($(ARCH),avx2)
-  SIMD_FLAGS += -mavx2 -mfma
-endif
-ifeq ($(ARCH),avx512)
-  SIMD_FLAGS += -mavx512f -mfma
-endif
+CC = gcc
+CFLAGS = -Ofast -march=native -funroll-loops -ffast-math -I fabe13
 
-CFLAGS   := -Ofast -funroll-loops -ffast-math $(SIMD_FLAGS) -I.
-LDFLAGS  := -lm
-
-# Detect clock_gettime need
+# Detect platform (for linking -lrt only on Linux)
 UNAME_S := $(shell uname -s)
-ifeq ($(UNAME_S),Darwin)
-  LDFLAGS +=       # no -lrt on macOS
+ifeq ($(UNAME_S), Darwin)
+    LRT_FLAG =
 else
-  LDFLAGS += -lrt
+    LRT_FLAG = -lrt
 endif
 
-SRC_DIR       := fabe13
-TEST_DIR      := tests
-BUILD_DIR     := build
+LDLIBS = -lm $(LRT_FLAG)
 
-LIB_SRC       := $(SRC_DIR)/fabe13.c
-BENCH_SRC     := $(SRC_DIR)/benchmark_fabe13.c
-TEST_SRC      := $(TEST_DIR)/test_fabe13.c
+# === Source Files ===
+SRC_DIR       = fabe13
+TEST_DIR      = fabe13/tests
+BUILD_DIR     = build
 
-LIB_OBJ       := $(BUILD_DIR)/fabe13.o
-BENCH_BIN     := $(BUILD_DIR)/fabe13_benchmark
-TEST_BIN      := $(BUILD_DIR)/fabe13_test
+LIB_SRC       = $(SRC_DIR)/fabe13.c
+BENCH_SRC     = $(SRC_DIR)/benchmark_fabe13.c
+TEST_SRC      = $(TEST_DIR)/test_fabe13.c
 
-.PHONY: all clean run-test run-benchmark
+LIB_OBJ       = $(BUILD_DIR)/fabe13.o
+BENCH_BIN     = $(BUILD_DIR)/fabe13_benchmark
+TEST_BIN      = $(BUILD_DIR)/fabe13_test
 
-all: $(TEST_BIN) $(BENCH_BIN)
+# === Default Target ===
+all: $(BENCH_BIN) $(TEST_BIN)
 
+# Create build directory if needed
 $(BUILD_DIR):
-	mkdir -p $@
+	mkdir -p $(BUILD_DIR)
 
+# 1) Build library object
 $(LIB_OBJ): $(LIB_SRC) | $(BUILD_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(TEST_BIN): $(LIB_OBJ) $(TEST_SRC) | $(BUILD_DIR)
-	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
-
+# 2) Benchmark binary
 $(BENCH_BIN): $(LIB_OBJ) $(BENCH_SRC) | $(BUILD_DIR)
-	$(CC) $(CFLAGS) -DENABLE_FABE13_BENCHMARK=1 $^ -o $@ $(LDFLAGS)
+	$(CC) $(CFLAGS) -DENABLE_FABE13_BENCHMARK=1 $^ -o $@ $(LDLIBS)
+
+# 3) Unit test binary
+$(TEST_BIN): $(LIB_OBJ) $(TEST_SRC) | $(BUILD_DIR)
+	$(CC) $(CFLAGS) $^ -o $@ $(LDLIBS)
+
+# === Convenience Targets ===
+run-benchmark: $(BENCH_BIN)
+	./$(BENCH_BIN)
 
 run-test: $(TEST_BIN)
 	./$(TEST_BIN)
 
-run-benchmark: $(BENCH_BIN)
-	./$(BENCH_BIN)
-
 clean:
 	rm -rf $(BUILD_DIR)
+
+.PHONY: all clean run-test run-benchmark
