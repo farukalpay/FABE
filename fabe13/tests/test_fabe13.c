@@ -16,6 +16,9 @@
 #include <stdio.h>
 #include <stdlib.h> // For malloc, free, posix_memalign
 #include <math.h>   // For M_PI, sin, cos, etc., NAN, INFINITY, fabs, isnan
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
 #include <stdbool.h> // For bool
 #include <string.h>  // For strerror
 #include <errno.h>   // For errno
