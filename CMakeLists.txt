@@ -24,20 +24,18 @@ if(CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64")
   endif()
 elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64")
   if(FABE13_USE_NEON)
-    # NEON is usually enabled by default on AArch64
+    # NEON usually auto-enabled
   endif()
 endif()
 
-# ------------------ SOURCE STRUCTURE ------------------
+# ------------------ INCLUDE ------------------
 include_directories(${CMAKE_SOURCE_DIR}/fabe13)
 
+# ------------------ CORE LIBRARY ------------------
 add_library(fabe13 STATIC
   fabe13/fabe13.c
 )
-
-target_include_directories(fabe13 PUBLIC
-  ${CMAKE_SOURCE_DIR}/fabe13
-)
+target_include_directories(fabe13 PUBLIC ${CMAKE_SOURCE_DIR}/fabe13)
 
 # ------------------ BENCHMARK ------------------
 if(FABE13_ENABLE_BENCHMARK)
@@ -49,17 +47,27 @@ if(FABE13_ENABLE_BENCHMARK)
   endif()
 endif()
 
+# ------------------ TEST DISCOVERY ------------------
+set(TEST_SOURCE "")
+if(EXISTS "${CMAKE_SOURCE_DIR}/tests/test_fabe13.c")
+  set(TEST_SOURCE "${CMAKE_SOURCE_DIR}/tests/test_fabe13.c")
+elseif(EXISTS "${CMAKE_SOURCE_DIR}/fabe13/tests/test_fabe13.c")
+  set(TEST_SOURCE "${CMAKE_SOURCE_DIR}/fabe13/tests/test_fabe13.c")
+else()
+  message(WARNING "No test_fabe13.c file found. Disabling tests.")
+  set(FABE13_ENABLE_TEST OFF)
+endif()
+
 # ------------------ UNIT TEST ------------------
 if(FABE13_ENABLE_TEST)
-  # Use unique name to avoid Replit collisions
-  add_executable(fabe13_test_runner tests/test_fabe13.c)
+  add_executable(fabe13_test_runner ${TEST_SOURCE})
   target_link_libraries(fabe13_test_runner PRIVATE fabe13 m)
   target_include_directories(fabe13_test_runner PRIVATE ${CMAKE_SOURCE_DIR}/fabe13)
   enable_testing()
   add_test(NAME FABE13_UnitTest COMMAND fabe13_test_runner)
 endif()
 
-# ------------------ Summary ------------------
+# ------------------ BUILD SUMMARY ------------------
 message(STATUS "")
 message(STATUS "FABE13-HX Configuration Summary")
 message(STATUS "  AVX2 enabled   : ${FABE13_USE_AVX2}")
