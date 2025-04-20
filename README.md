@@ -72,9 +72,46 @@ make run-benchmark
 
 ---
 
-## 🚀 Benchmark Results
+## 🚀 FABE13-HX vs libm — Performance Benchmarks
 
-FABE13-HX achieves significant performance gains over standard math library implementations across various workloads.
+FABE13-HX delivers consistent speedups over standard `libm`, across platforms and input sizes. These benchmarks highlight its advantage for both cloud-based and local environments.
+
+### 📊 Performance Overview
+
+- 🟨 **FABE13-HX**: SIMD-accelerated (`AVX2+FMA`, Ψ-core)
+- 🔴 **libm**: Standard C math (`math.h`)
+- 🧠 Input size: `N ∈ [10 ... 1,000,000,000]` doubles
+- ⚙️ Timing: Full-array `sincos()` throughput
+- 📐 Aligned memory: 64 bytes
+- 🎯 Accuracy: ≤ 2e-11 max diff (sin/cos)
+
+---
+
+### 🌐 Replit (Cloud / Linux, AVX2 Clang)
+
+![FABE13-HX vs libm — Replit](https://github.com/farukalpay/FABE/blob/main/img/Performance%20Comparison%3A%20FABE13-HX%20vs%20libm%20(Platform%3A%20Replit%2C%20AVX2%20Core%2C%20CMath%20backend).png)
+
+> ✅ **FABE13-HX is consistently faster than libm — up to 8.4× for large inputs.**
+
+- Platform: Replit Linux
+- SIMD: AVX2 + FMA
+- Compiler: Clang 14 (nix)
+- libm: GNU `math.h`
+
+---
+
+### 🍎 MacBook Pro (macOS AVX2, AppleClang)
+
+![FABE13-HX vs libm — macOS](https://github.com/farukalpay/FABE/blob/main/img/FABE13-HX%20vs%20libm%20%E2%80%94%20Performance%20Benchmark.png)
+
+> 🟨 **FABE13-HX outperforms libm with up to 8.4× higher throughput on AppleClang (AVX2).**
+
+- Platform: macOS 14.x (MacBook Pro 16")
+- SIMD: AVX2 + FMA
+- Compiler: AppleClang 16.0
+- libm: macOS system `math.h`
+
+---
 
 ### 📊 Performance Overview
 
@@ -116,9 +153,6 @@ Max diff vs libm: sin=1.224e-11, cos=1.225e-11
 - All test cases maintain acceptable numerical accuracy compared to libm
 - Maximum difference observed: ~10⁻¹¹ for both sin and cos operations 
 - Properly handles edge cases (0, inf, nan) with correct behavior
-
-![FABE13 vs libm](https://github.com/farukalpay/FABE/blob/main/img/FABE13-HX%20vs%20libm%20—%20Performance%20Benchmark.png)
-![FABE13 vs libm](https://github.com/farukalpay/FABE/blob/main/img/Performance%20Comparison%3A%20FABE13-HX%20vs%20libm%20(Platform%3A%20Replit%2C%20AVX2%20Core%2C%20CMath%20backend).png)
 
 ---
 
