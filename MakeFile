@@ -1,0 +1,58 @@
+# === Compiler & Flags ===
+CC       := gcc
+ARCH     ?= native         # override with ARCH=avx2 or ARCH=avx512
+SIMD_FLAGS := -march=$(ARCH)
+ifeq ($(ARCH),avx2)
+  SIMD_FLAGS += -mavx2 -mfma
+endif
+ifeq ($(ARCH),avx512)
+  SIMD_FLAGS += -mavx512f -mfma
+endif
+
+CFLAGS   := -Ofast -funroll-loops -ffast-math $(SIMD_FLAGS) -I.
+LDFLAGS  := -lm
+
+# Detect clock_gettime need
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Darwin)
+  LDFLAGS +=       # no -lrt on macOS
+else
+  LDFLAGS += -lrt
+endif
+
+SRC_DIR       := fabe13
+TEST_DIR      := tests
+BUILD_DIR     := build
+
+LIB_SRC       := $(SRC_DIR)/fabe13.c
+BENCH_SRC     := $(SRC_DIR)/benchmark_fabe13.c
+TEST_SRC      := $(TEST_DIR)/test_fabe13.c
+
+LIB_OBJ       := $(BUILD_DIR)/fabe13.o
+BENCH_BIN     := $(BUILD_DIR)/fabe13_benchmark
+TEST_BIN      := $(BUILD_DIR)/fabe13_test
+
+.PHONY: all clean run-test run-benchmark
+
+all: $(TEST_BIN) $(BENCH_BIN)
+
+$(BUILD_DIR):
+	mkdir -p $@
+
+$(LIB_OBJ): $(LIB_SRC) | $(BUILD_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(TEST_BIN): $(LIB_OBJ) $(TEST_SRC) | $(BUILD_DIR)
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+$(BENCH_BIN): $(LIB_OBJ) $(BENCH_SRC) | $(BUILD_DIR)
+	$(CC) $(CFLAGS) -DENABLE_FABE13_BENCHMARK=1 $^ -o $@ $(LDFLAGS)
+
+run-test: $(TEST_BIN)
+	./$(TEST_BIN)
+
+run-benchmark: $(BENCH_BIN)
+	./$(BENCH_BIN)
+
+clean:
+	rm -rf $(BUILD_DIR)
