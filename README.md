@@ -1,23 +1,33 @@
-# FABE13-HX — Post-Polynomial SIMD Trigonometric Library
+# FABE13-HX: High-Performance SIMD Trigonometric Library for Scientific Computing
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Build](https://img.shields.io/badge/build-passing-brightgreen.svg)]()
 [![Platform](https://img.shields.io/badge/platform-x86_64%20%7C%20AArch64-lightgrey.svg)]()
 [![SIMD](https://img.shields.io/badge/SIMD-AVX2%2C%20AVX512%2C%20NEON-orange.svg)]()
 
-**FABE13-HX** is a high-performance trigonometric math library in C, reimagining `sin(x)`, `cos(x)`, and `sincos(x)` using a novel rational-function foundation: the **Ψ-Hyperbasis**.
+**FABE13-HX** is a high-performance C math library that delivers ultra-fast trigonometric functions (`sin`, `cos`, `sincos`) using advanced SIMD vectorization. Powered by the innovative **Ψ-Hyperbasis** algorithm, it outperforms traditional math libraries by up to **8.4×** while maintaining high precision.
+
+## 🚀 Why Choose FABE13-HX for Your Numerical Computing Needs
+
+FABE13-HX revolutionizes trigonometric computation for:
+
+- **Machine Learning & AI Acceleration** - Optimize neural network performance
+- **Scientific Simulations & HPC** - Accelerate physics, engineering, and computational modeling
+- **Real-time Signal Processing** - Enhance DSP, audio, and sensor data analysis
+- **Graphics & Visualization Systems** - Improve rendering performance
+- **Embedded Computing** - Efficient performance on resource-constrained systems
+
+## 💡 Key Features & Performance Benefits
+
+- ⚡ **Up to 8.4× Faster Than Standard Math Libraries** across various platforms and input sizes
+- 🔄 **Cross-Architecture Optimization** with support for AVX512F, AVX2+FMA (x86), NEON (ARM)
+- 🎯 **High Precision** with maximum error ≤ 2e-11 compared to standard libm
+- 🧠 **Novel Rational-Function Architecture** based on Ψ-Hyperbasis instead of traditional polynomials
+- 🔢 **Extreme-Range Support** accurate up to |x| ≈ 1e308 via advanced Payne–Hanek reduction
+- 🧩 **Unified API** for both scalar and vectorized operations
+- 🛡️ **Robust Error Handling** with proper NaN/Inf/0 behavior
 
 Designed for **numerical computing**, **AI acceleration**, and **scientific simulation**, it replaces traditional polynomial approximations with a fused rational + correction model that's more efficient and vectorization-friendly.
-
----
-
-## ✨ What's New in HX
-
-- 🚀 **Ψ-Hyperbasis Core:** `Ψ(x) = x / (1 + (3/8)x²)` drives both `sin` and `cos` via correction polynomials in `Ψ²`.
-- 🧠 **Post-Polynomial Philosophy:** A rational-first architecture beyond Horner or Estrin's classical methods.
-- ⚡ **Runtime SIMD Dispatch:** Supports AVX512F, AVX2+FMA (x86), NEON (ARM), or scalar fallback.
-- 🧩 **Single API for All:** Scalar and vector modes unified in a clean, minimal C API.
-- 🔬 **Extreme-Range Support:** Accurate up to |x| ≈ 1e308 via Payne–Hanek reduction.
 
 ---
 
@@ -122,6 +132,10 @@ Benchmark Alignment: 64 bytes
 
 ### 📈 Scaling with Array Size
 
+> **8.4× throughput improvement** for large array processing compared to standard libm
+
+### ARM64/AArch64 Performance (NEON)
+
 | Array Size | FABE13 (sec) | Libm (sec) | FABE13 (M ops/sec) | Libm (M ops/sec) | Speedup |
 |------------|--------------|------------|-------------------|-----------------|---------|
 | 10         | 0.0000       | 0.0000     | 50.00             | 50.00           | 1.00x   |
@@ -204,13 +218,14 @@ void fabe13_sincos(const double* in, double* sin_out, double* cos_out, int n);
 
 ---
 
-## 🛠️ Roadmap
+## 🔭 Future Development Roadmap
 
-- [ ] SIMD Ψ-Hyperbasis implementation (AVX2 / NEON / AVX512)
-- [ ] `cosm1`, `expm1`, `log1p` expansions
-- [ ] `float32` support (`fabe13_sinf`, etc.)
-- [ ] LUT-based ultra-fast variants
-- [ ] Header-only + Python / Rust bindings
+- [ ] Extended SIMD Ψ-Hyperbasis implementation (AVX2 / NEON / AVX512)
+- [ ] Additional functions: `cosm1`, `expm1`, `log1p` with Ψ-Hyperbasis optimization
+- [ ] Single-precision `float32` support (`fabe13_sinf`, etc.)
+- [ ] Ultra-fast LUT-based variants for performance-critical applications
+- [ ] Language bindings for Python, Rust, and C++
+- [ ] Documentation and examples for common use cases
 
 ---
 
