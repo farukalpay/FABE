@@ -21,6 +21,9 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <math.h>
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
 #include <stdlib.h> // For NULL (though not strictly needed now)
 #include <float.h>  // For DBL_MAX etc.
 #include <limits.h> // For INT_MAX (used in API check)
